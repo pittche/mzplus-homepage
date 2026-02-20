@@ -1,0 +1,1690 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MZplus – 100 Jahre Medienkompetenz · Saarpfalz-Kreis</title>
+  <meta name="description" content="Das MZplus Saarpfalz-Kreis: Seit 1926 der Partner für Bildung, Medien und digitale Innovation. Von der Kreisbildstelle zum Kompetenzzentrum des 21. Jahrhunderts.">
+  <meta name="theme-color" content="#0d0d10">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,300;1,600;1,700&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==============================
+       RESET & ROOT
+    ============================== */
+    *, *::before, *::after {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+
+    :root {
+      --bg:      #0d0d10;
+      --bg2:     #141417;
+      --bg3:     #1c1c21;
+      --border:  #27272f;
+      --border2: #3a3a45;
+
+      --amber:   #f0a330;
+      --amber2:  #ffd27a;
+      --amber-a: rgba(240,163,48,.12);
+      --amber-b: rgba(240,163,48,.30);
+
+      --cyan:    #00ccee;
+      --cyan-a:  rgba(0,204,238,.08);
+      --cyan-b:  rgba(0,204,238,.25);
+
+      --green:   #00e5a0;
+      --red:     #e84038;
+
+      --text:    #ede9e0;
+      --text2:   #8a8375;
+      --text3:   #47443e;
+
+      --serif:   'Cormorant Garamond', Georgia, serif;
+      --body:    'Crimson Pro', Georgia, serif;
+      --mono:    'DM Mono', 'Courier New', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      font-weight: 300;
+      line-height: 1.75;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Film grain overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9990;
+      opacity: .5;
+    }
+
+    /* ==============================
+       COUNTDOWN OVERLAY
+    ============================== */
+    #countdown {
+      position: fixed; inset: 0;
+      background: #000;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column;
+      z-index: 9999;
+      gap: 24px;
+    }
+
+    .cd-frame {
+      position: relative;
+      width: min(280px, 70vw);
+      height: min(280px, 70vw);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .cd-ring {
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,.15);
+    }
+
+    .cd-ring-animated {
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      border-top-color: #fff;
+      animation: ring-spin .8s linear;
+    }
+
+    .cd-cross-h, .cd-cross-v {
+      position: absolute;
+      background: rgba(255,255,255,.12);
+    }
+    .cd-cross-h { left: 50%; top: 20%; bottom: 20%; width: 1px; transform: translateX(-50%); }
+    .cd-cross-v { top: 50%; left: 20%; right: 20%; height: 1px; transform: translateY(-50%); }
+
+    .cd-corner {
+      position: absolute;
+      width: 16px; height: 16px;
+      border-color: rgba(255,255,255,.6);
+      border-style: solid;
+    }
+    .cd-corner:nth-child(1) { top: 16px; left: 16px; border-width: 2px 0 0 2px; }
+    .cd-corner:nth-child(2) { top: 16px; right: 16px; border-width: 2px 2px 0 0; }
+    .cd-corner:nth-child(3) { bottom: 16px; left: 16px; border-width: 0 0 2px 2px; }
+    .cd-corner:nth-child(4) { bottom: 16px; right: 16px; border-width: 0 2px 2px 0; }
+
+    .cd-number {
+      font-family: var(--mono);
+      font-size: clamp(80px, 20vw, 130px);
+      font-weight: 300;
+      color: #fff;
+      line-height: 1;
+      animation: cd-flicker 1s infinite;
+      transition: transform .15s;
+      position: relative;
+      z-index: 2;
+    }
+
+    .cd-label {
+      font-family: var(--mono);
+      font-size: clamp(9px, 2vw, 11px);
+      letter-spacing: 4px;
+      color: rgba(255,255,255,.4);
+      text-transform: uppercase;
+    }
+
+    .cd-scratch {
+      position: absolute; top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,.15) 20%, transparent 40%, rgba(255,255,255,.08) 70%, transparent 100%);
+      animation: scratch-move 0.7s steps(1) infinite;
+    }
+
+    @keyframes ring-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes cd-flicker { 0%,94% { opacity: 1; } 95% { opacity: .7; } 96% { opacity: 1; } 98% { opacity: .85; } 100% { opacity: 1; } }
+    @keyframes scratch-move { 0% { left: 35%; opacity: 1; } 20% { left: 60%; opacity: .5; } 40% { left: 20%; opacity: .8; } 60% { left: 75%; opacity: .3; } 80% { left: 45%; opacity: .9; } 100% { left: 30%; opacity: 1; } }
+
+    /* ==============================
+       PROGRESS BAR
+    ============================== */
+    #progress-bar {
+      position: fixed; top: 0; left: 0; height: 2px;
+      background: var(--amber);
+      z-index: 9988; width: 0; transition: width .2s;
+      box-shadow: 0 0 8px var(--amber-b);
+    }
+
+    /* ==============================
+       NAVIGATION
+    ============================== */
+    #main-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13,13,16,.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand-bar {
+      display: flex; align-items: center; gap: 16px;
+      padding: 10px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand-logo {
+      font-family: var(--serif);
+      font-size: 26px; font-weight: 700;
+      color: var(--amber);
+      letter-spacing: -1px;
+      cursor: pointer;
+      transition: opacity .2s;
+    }
+    .brand-logo span { color: var(--cyan); }
+    .brand-logo:hover { opacity: .8; }
+
+    .brand-sub {
+      font-family: var(--mono);
+      font-size: 9px; color: var(--text2);
+      letter-spacing: 2px; text-transform: uppercase;
+      line-height: 1.5;
+    }
+
+    .brand-badge {
+      margin-left: auto;
+      font-family: var(--mono);
+      font-size: 10px; color: var(--amber);
+      letter-spacing: 2px;
+      border: 1px solid var(--amber-b);
+      padding: 4px 10px;
+      white-space: nowrap;
+    }
+
+    /* Film holes row */
+    .film-holes-row {
+      height: 14px;
+      background: var(--bg2);
+      display: flex; align-items: center;
+      gap: 14px; padding: 0 10px;
+      overflow: hidden;
+    }
+    .film-hole {
+      width: 9px; height: 7px;
+      background: var(--bg);
+      border-radius: 1.5px;
+      flex-shrink: 0;
+    }
+
+    .nav-tabs {
+      display: flex; overflow-x: auto;
+      scrollbar-width: none;
+      padding: 0 12px;
+    }
+    .nav-tabs::-webkit-scrollbar { display: none; }
+
+    .nav-tab {
+      padding: 11px 18px;
+      font-family: var(--mono);
+      font-size: 10px; letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text2);
+      background: none; border: none;
+      cursor: pointer; white-space: nowrap;
+      position: relative; transition: color .2s;
+    }
+    .nav-tab::after {
+      content: ''; position: absolute;
+      bottom: 0; left: 14px; right: 14px;
+      height: 2px; background: var(--amber);
+      transform: scaleX(0); transition: transform .25s ease;
+    }
+    .nav-tab.active { color: var(--amber); }
+    .nav-tab.active::after { transform: scaleX(1); }
+    .nav-tab:hover:not(.active) { color: var(--text); }
+
+    /* ==============================
+       SHARED LAYOUT
+    ============================== */
+    .section-header {
+      max-width: 1200px; margin: 0 auto;
+      padding: 72px 24px 40px;
+    }
+
+    .kicker {
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 5px; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 14px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .kicker::before { content: '—'; opacity: .5; }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(42px, 7vw, 88px);
+      font-weight: 700; line-height: .95;
+      letter-spacing: -2px;
+    }
+
+    .section-sub {
+      font-size: clamp(16px, 2vw, 19px);
+      color: var(--text2);
+      max-width: 580px; margin-top: 18px;
+      line-height: 1.7;
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Fun Fact Box */
+    .fun-fact {
+      background: var(--amber-a);
+      border: 1px solid var(--amber-b);
+      border-left: 4px solid var(--amber);
+      padding: 18px 22px; margin: 28px 0;
+    }
+    .fun-fact-label {
+      font-family: var(--mono); font-size: 9px;
+      letter-spacing: 4px; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 8px;
+    }
+    .fun-fact p { font-size: 15px; line-height: 1.7; color: var(--text); }
+
+    /* Buttons */
+    .btn-group { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 36px; }
+
+    .btn-primary {
+      background: var(--amber); color: #000;
+      border: none; padding: 13px 30px;
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 3px; text-transform: uppercase;
+      cursor: pointer; transition: all .2s;
+      text-decoration: none; display: inline-block;
+      font-weight: 500;
+    }
+    .btn-primary:hover { background: var(--amber2); transform: translateY(-2px); }
+
+    .btn-secondary {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border2);
+      padding: 13px 30px;
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 3px; text-transform: uppercase;
+      cursor: pointer; transition: all .2s;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-secondary:hover { border-color: var(--amber); color: var(--amber); }
+
+    /* ==============================
+       TAB: START / HERO
+    ============================== */
+    .hero {
+      max-width: 1200px; margin: 0 auto;
+      padding: 80px 24px 60px;
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 5px; color: var(--amber);
+      text-transform: uppercase; margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .blink { animation: blink-anim 1.4s infinite; }
+    @keyframes blink-anim { 0%,49% { opacity:1; } 50%,100% { opacity: 0; } }
+
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(62px, 12vw, 148px);
+      font-weight: 700; line-height: .88;
+      letter-spacing: -4px; margin-bottom: 0;
+    }
+    .hero-title-1 { display: block; color: var(--text); }
+    .hero-title-2 { display: block; color: var(--amber); font-style: italic; }
+
+    .hero-meta {
+      font-family: var(--mono); font-size: 11px;
+      letter-spacing: 4px; color: var(--text2);
+      text-transform: uppercase; margin-top: 22px; margin-bottom: 36px;
+    }
+
+    .hero-quote {
+      font-size: clamp(18px, 2.5vw, 26px);
+      font-style: italic; color: var(--text2);
+      border-left: 3px solid var(--amber);
+      padding-left: 22px; max-width: 640px; line-height: 1.5;
+    }
+    .hero-quote strong { color: var(--text); font-style: normal; }
+
+    /* Film strip scroller */
+    .film-scroller {
+      position: relative; overflow: hidden;
+      margin: 56px 0; padding: 0;
+    }
+    .film-scroller::before, .film-scroller::after {
+      content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2;
+    }
+    .film-scroller::before { left: 0; background: linear-gradient(90deg, var(--bg), transparent); }
+    .film-scroller::after  { right: 0; background: linear-gradient(-90deg, var(--bg), transparent); }
+
+    /* Top perforations */
+    .film-perfs {
+      background: var(--bg2); height: 18px;
+      display: flex; align-items: center; gap: 16px; padding: 0 8px; overflow: hidden;
+    }
+    .film-perf { width: 11px; height: 8px; background: var(--bg); border-radius: 2px; flex-shrink: 0; }
+
+    .film-track {
+      display: flex; gap: 0; width: max-content;
+      animation: film-scroll 38s linear infinite;
+    }
+    .film-track:hover { animation-play-state: paused; }
+
+    @keyframes film-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .film-frame {
+      width: 260px; height: 170px;
+      flex-shrink: 0;
+      border-right: 2px solid var(--border);
+      overflow: hidden; position: relative;
+    }
+    .film-frame img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: grayscale(25%) contrast(1.1) brightness(.9);
+      transition: filter .4s, transform .4s;
+    }
+    .film-frame:hover img { filter: grayscale(0%) contrast(1.15) brightness(1); transform: scale(1.04); }
+
+    .film-frame-label {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,.7));
+      font-family: var(--mono); font-size: 9px;
+      letter-spacing: 2px; color: rgba(255,255,255,.6);
+      text-transform: uppercase; padding: 12px 8px 6px;
+    }
+
+    /* Stats strip */
+    .stats-strip {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border);
+      max-width: 1200px; margin: 0 auto 72px;
+    }
+
+    .stat-card {
+      background: var(--bg); padding: 40px 28px;
+      position: relative; overflow: hidden;
+      transition: background .25s;
+    }
+    .stat-card:hover { background: var(--bg2); }
+    .stat-card::after {
+      content: ''; position: absolute;
+      bottom: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--amber), transparent);
+    }
+
+    .stat-num {
+      font-family: var(--serif); font-size: clamp(52px,5vw,72px);
+      font-weight: 700; color: var(--amber); line-height: 1; display: block;
+    }
+    .stat-label {
+      font-family: var(--mono); font-size: 9px;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--text2); margin-top: 8px;
+    }
+    .stat-desc { font-size: 13px; color: var(--text3); margin-top: 6px; line-height: 1.6; }
+
+    /* Intro block */
+    .intro-block {
+      max-width: 780px; margin: 0 auto; padding: 0 24px 72px;
+    }
+    .intro-block h2 {
+      font-family: var(--serif); font-size: clamp(32px, 4vw, 48px);
+      font-weight: 700; line-height: 1.15; margin-bottom: 22px;
+    }
+    .intro-block p {
+      font-size: clamp(16px, 2vw, 19px); line-height: 1.8;
+      color: var(--text2); margin-bottom: 18px;
+    }
+    .intro-block p strong { color: var(--text); }
+
+    /* ==============================
+       TAB: GESCHICHTE
+    ============================== */
+    .timeline {
+      max-width: 860px; margin: 0 auto;
+      padding: 0 24px 80px; position: relative;
+    }
+    .timeline::before {
+      content: ''; position: absolute;
+      left: calc(24px + 64px); top: 0; bottom: 0; width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--amber) 8%, rgba(240,163,48,.3) 90%, transparent);
+    }
+
+    .tl-era {
+      display: flex; gap: 0; margin-bottom: 72px; position: relative;
+    }
+
+    .tl-date {
+      width: 64px; flex-shrink: 0; text-align: right;
+      padding-top: 2px; padding-right: 0;
+    }
+    .tl-year {
+      font-family: var(--mono); font-size: 10px;
+      color: var(--amber); letter-spacing: 1px;
+      display: block; line-height: 1.2;
+    }
+    .tl-year-end {
+      font-family: var(--mono); font-size: 9px;
+      color: var(--text3); letter-spacing: 1px; display: block;
+    }
+
+    .tl-dot {
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--bg); border: 2px solid rgba(240,163,48,.5);
+      position: absolute;
+      left: calc(24px + 64px - 7px); top: 4px; z-index: 2;
+      transition: border-color .3s;
+    }
+    .tl-dot.highlight {
+      background: var(--amber);
+      border-color: var(--amber);
+      box-shadow: 0 0 12px var(--amber-b);
+    }
+
+    .tl-body { flex: 1; padding-left: 32px; }
+
+    .era-tag {
+      display: inline-block;
+      background: var(--amber-a);
+      border: 1px solid var(--amber-b);
+      color: var(--amber); padding: 3px 10px;
+      font-family: var(--mono); font-size: 8px;
+      letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .era-title {
+      font-family: var(--serif); font-size: clamp(24px, 3vw, 34px);
+      font-weight: 700; line-height: 1.15; margin-bottom: 14px;
+    }
+
+    .era-img {
+      width: 100%; max-width: 520px; height: 260px;
+      object-fit: cover; margin: 18px 0;
+      border: 1px solid var(--border);
+      transition: filter .4s;
+    }
+
+    .era-body {
+      font-size: clamp(15px, 1.8vw, 17px);
+      line-height: 1.8; color: var(--text2);
+      margin-bottom: 14px;
+    }
+    .era-body strong { color: var(--text); }
+
+    .era-quote {
+      font-style: italic; font-size: 15px;
+      color: var(--text3); border-left: 2px solid var(--border2);
+      padding-left: 16px; margin: 18px 0;
+    }
+    .era-quote strong { color: var(--amber) !important; font-style: normal; }
+
+    /* ==============================
+       TAB: LEISTUNGEN
+    ============================== */
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border);
+      max-width: 1200px; margin: 0 auto 80px;
+    }
+
+    .svc-card {
+      background: var(--bg); padding: 44px 36px;
+      position: relative; overflow: hidden;
+      transition: background .25s;
+    }
+    .svc-card:hover { background: var(--bg2); }
+
+    .svc-icon { font-size: 38px; margin-bottom: 20px; display: block; }
+
+    .svc-num {
+      font-family: var(--mono); font-size: 9px;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--text3); margin-bottom: 12px;
+    }
+
+    .svc-title {
+      font-family: var(--serif); font-size: clamp(22px, 2.5vw, 30px);
+      font-weight: 700; margin-bottom: 14px; line-height: 1.15;
+    }
+
+    .svc-desc {
+      font-size: clamp(14px, 1.6vw, 16px);
+      line-height: 1.75; color: var(--text2);
+    }
+    .svc-desc strong { color: var(--text); }
+
+    .svc-tag {
+      margin-top: 22px; padding: 10px 14px;
+      background: var(--cyan-a);
+      border-left: 2px solid var(--cyan);
+      font-family: var(--mono); font-size: 10px;
+      color: var(--cyan); letter-spacing: 1px;
+    }
+
+    .svc-card.featured {
+      background: var(--amber-a);
+      border: 1px solid rgba(240,163,48,.2);
+    }
+    .svc-card.featured .svc-tag {
+      background: var(--amber-a); border-color: var(--amber); color: var(--amber);
+    }
+
+    /* ==============================
+       TAB: MAKERSPACE
+    ============================== */
+    .maker-hero {
+      max-width: 1200px; margin: 0 auto; padding: 0 24px 80px;
+    }
+
+    .maker-big {
+      display: grid; grid-template-columns: 1.2fr 1fr;
+      gap: 1px; background: var(--border); margin-bottom: 1px;
+    }
+
+    .maker-cell {
+      background: var(--bg2); padding: 48px 40px;
+      position: relative;
+    }
+    .maker-cell.span2 { grid-column: 1 / -1; }
+    .maker-cell.dark { background: #0a0a10; }
+
+    .maker-img {
+      width: 100%; height: 280px; object-fit: cover;
+      margin-bottom: 24px; border: 1px solid var(--border);
+    }
+
+    .maker-cell-title {
+      font-family: var(--serif); font-size: clamp(26px, 3vw, 38px);
+      font-weight: 700; margin-bottom: 14px; line-height: 1.15;
+    }
+    .maker-cell-sub {
+      font-size: clamp(15px, 1.7vw, 17px);
+      line-height: 1.8; color: var(--text2);
+    }
+    .maker-cell-sub strong { color: var(--text); }
+
+    .tool-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+    .tool-tag {
+      background: var(--bg3); border: 1px solid var(--border2);
+      color: var(--text2); padding: 5px 12px;
+      font-family: var(--mono); font-size: 9px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+
+    .maker-cells-row {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border);
+    }
+
+    /* ==============================
+       TAB: VISION
+    ============================== */
+    .vision-body {
+      max-width: 1200px; margin: 0 auto; padding: 0 24px 80px;
+    }
+
+    .vision-manifesto {
+      max-width: 720px; margin-bottom: 72px;
+    }
+    .vision-manifesto p {
+      font-family: var(--serif);
+      font-size: clamp(22px, 3.5vw, 40px);
+      line-height: 1.45; color: var(--text2); margin-bottom: 22px;
+    }
+    .vision-manifesto p strong { color: var(--text); }
+    .vision-manifesto p em { color: var(--amber); font-style: italic; }
+
+    .future-cards {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .future-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      padding: 30px 26px; position: relative; overflow: hidden;
+      transition: border-color .25s, transform .25s;
+    }
+    .future-card:hover { border-color: var(--cyan); transform: translateY(-4px); }
+    .future-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--cyan), transparent);
+    }
+
+    .fc-year {
+      font-family: var(--mono); font-size: 9px; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--cyan); margin-bottom: 12px;
+    }
+    .fc-title {
+      font-family: var(--serif); font-size: 24px; font-weight: 700; margin-bottom: 12px;
+    }
+    .fc-desc { font-size: 14px; color: var(--text2); line-height: 1.7; }
+
+    .vision-bigquote {
+      max-width: 800px; margin: 0 auto; padding: 72px 24px;
+      text-align: center;
+    }
+    .vision-bigquote p {
+      font-family: var(--serif); font-style: italic;
+      font-size: clamp(22px, 4vw, 52px); line-height: 1.4;
+      color: var(--text2);
+    }
+    .vision-bigquote p strong { color: var(--text); }
+    .vision-bigquote p em { color: var(--amber); }
+    .vision-bigquote cite {
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--text3); display: block; margin-top: 20px;
+    }
+
+    /* ==============================
+       TAB: KONTAKT
+    ============================== */
+    .contact-wrap {
+      max-width: 1200px; margin: 0 auto; padding: 0 24px 80px;
+    }
+
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+      margin-top: 56px;
+    }
+
+    .contact-group h3 {
+      font-family: var(--serif); font-size: 30px; font-weight: 700; margin-bottom: 28px;
+    }
+
+    .contact-item {
+      display: flex; gap: 16px; margin-bottom: 24px; align-items: flex-start;
+    }
+    .contact-icon {
+      width: 42px; height: 42px; flex-shrink: 0;
+      background: var(--amber-a); border: 1px solid var(--amber-b);
+      display: flex; align-items: center; justify-content: center; font-size: 18px;
+    }
+    .contact-text strong {
+      display: block; font-family: var(--mono);
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--text2); margin-bottom: 4px;
+    }
+    .contact-text { font-size: 15px; color: var(--text2); line-height: 1.6; }
+
+    /* Terminal */
+    .terminal {
+      background: #050508; border: 1px solid var(--border);
+      padding: 22px; font-family: var(--mono);
+    }
+    .term-header { display: flex; gap: 8px; margin-bottom: 16px; }
+    .term-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .term-dot.r { background: var(--red); }
+    .term-dot.y { background: var(--amber); }
+    .term-dot.g { background: var(--green); }
+
+    .term-line {
+      font-size: clamp(11px, 1.4vw, 13px);
+      line-height: 2; color: var(--green); display: block;
+    }
+    .term-line .p { color: #00ee88; }
+    .term-line .path { color: var(--cyan); }
+    .term-line .cmd { color: #fff; }
+    .term-line .out { color: rgba(255,255,255,.35); }
+    .term-cursor { animation: blink-anim 1s infinite; }
+
+    /* ==============================
+       FOOTER
+    ============================== */
+    .site-footer {
+      border-top: 1px solid var(--border);
+      padding: 36px 24px;
+      max-width: 1200px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+    }
+    .footer-brand {
+      font-family: var(--mono); font-size: 11px;
+      color: var(--text2); letter-spacing: 2px;
+    }
+    .footer-copy {
+      font-family: var(--mono); font-size: 9px;
+      color: var(--text3); text-align: right; letter-spacing: 1px;
+    }
+
+    /* ==============================
+       RESPONSIVE
+    ============================== */
+    @media (max-width: 1024px) {
+      .stats-strip { grid-template-columns: repeat(2, 1fr); }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .future-cards { grid-template-columns: repeat(2, 1fr); }
+      .maker-big { grid-template-columns: 1fr; }
+      .maker-cell.span2 { grid-column: 1; }
+      .maker-cells-row { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 56px 20px 40px; }
+      .hero-title { letter-spacing: -2px; }
+      .stats-strip { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .future-cards { grid-template-columns: 1fr; }
+      .maker-cells-row { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .timeline::before { left: calc(20px + 52px); }
+      .tl-date { width: 52px; }
+      .tl-dot { left: calc(20px + 52px - 7px); }
+      .era-title { font-size: 22px; }
+      .vision-manifesto p { font-size: 20px; }
+      .brand-badge { display: none; }
+      .section-title { letter-spacing: -1px; }
+      .site-footer { flex-direction: column; text-align: center; }
+      .footer-copy { text-align: center; }
+      .maker-cell { padding: 32px 24px; }
+      .svc-card { padding: 32px 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .nav-tab { padding: 10px 12px; font-size: 9px; letter-spacing: 1px; }
+      .btn-group { flex-direction: column; }
+      .btn-primary, .btn-secondary { text-align: center; }
+      .hero-title { font-size: clamp(52px, 16vw, 80px); }
+    }
+
+    /* Tab content */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+  </style>
+</head>
+<body>
+
+<!-- ==============================
+     COUNTDOWN OVERLAY
+============================== -->
+<div id="countdown">
+  <div class="cd-frame">
+    <div class="cd-ring"></div>
+    <div class="cd-ring-animated" id="cd-ring"></div>
+    <div class="cd-cross-h"></div>
+    <div class="cd-cross-v"></div>
+    <div class="cd-corner"></div>
+    <div class="cd-corner"></div>
+    <div class="cd-corner"></div>
+    <div class="cd-corner"></div>
+    <div class="cd-scratch"></div>
+    <div class="cd-number" id="cd-num">5</div>
+  </div>
+  <div class="cd-label">MZplus · Saarpfalz-Kreis · 1926 – 2026</div>
+</div>
+
+<!-- Progress Bar -->
+<div id="progress-bar"></div>
+
+<!-- ==============================
+     NAVIGATION
+============================== -->
+<nav id="main-nav" style="display:none">
+  <div class="nav-brand-bar">
+    <div onclick="showTab('start')" style="cursor:pointer">
+      <div class="brand-logo">MZ<span>plus</span></div>
+      <div class="brand-sub">Medienzentrum Plus · Saarpfalz-Kreis</div>
+    </div>
+    <div class="brand-badge">1926 — 2026 · 100 JAHRE</div>
+  </div>
+  <div class="film-holes-row" id="film-holes-nav"></div>
+  <div class="nav-tabs">
+    <button class="nav-tab active"  onclick="showTab('start')">▶&nbsp; Start</button>
+    <button class="nav-tab"        onclick="showTab('geschichte')">📽&nbsp; Geschichte</button>
+    <button class="nav-tab"        onclick="showTab('leistungen')">⚡&nbsp; Leistungen</button>
+    <button class="nav-tab"        onclick="showTab('makerspace')">🔧&nbsp; MakerSpace</button>
+    <button class="nav-tab"        onclick="showTab('vision')">🚀&nbsp; Vision</button>
+    <button class="nav-tab"        onclick="showTab('kontakt')">📞&nbsp; Kontakt</button>
+  </div>
+</nav>
+
+<!-- ==============================
+     MAIN CONTENT
+============================== -->
+<main id="main-content" style="display:none">
+
+  <!-- ===== TAB: START ===== -->
+  <div id="tab-start" class="tab-content active">
+
+    <section class="hero">
+      <div class="hero-eyebrow">
+        <span class="blink">●</span>
+        SAARPFALZ-KREIS · SEIT 1926 · 100 JAHRE MEDIENKOMPETENZ
+      </div>
+      <h1 class="hero-title">
+        <span class="hero-title-1">100&nbsp;Jahre</span>
+        <span class="hero-title-2">Medienmacht.</span>
+      </h1>
+      <p class="hero-meta">Medienzentrum Plus &nbsp;·&nbsp; 1926 — 2026</p>
+      <p class="hero-quote">
+        Vom Glasdia zur <strong>Quantenlektion</strong>.<br>
+        Vom Epidiaskop zur <strong>KI-Assistenz</strong>.<br>
+        Wir waren immer da. <strong>Wir bleiben es.</strong>
+      </p>
+      <div class="btn-group">
+        <button class="btn-primary"    onclick="showTab('geschichte')">Unsere Reise entdecken</button>
+        <button class="btn-secondary"  onclick="showTab('leistungen')">Was wir heute tun</button>
+      </div>
+    </section>
+
+    <!-- Film Strip -->
+    <div class="film-scroller">
+      <div class="film-perfs" id="film-perfs-top"></div>
+      <div class="film-track" id="film-track"></div>
+      <div class="film-perfs" id="film-perfs-bot"></div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-strip">
+      <div class="stat-card reveal">
+        <span class="stat-num" data-target="100">0</span>
+        <div class="stat-label">Jahre Medienkompetenz</div>
+        <div class="stat-desc">1926 in der Weimarer Republik gegründet. Seither unterbrechungsfrei am Laufen.</div>
+      </div>
+      <div class="stat-card reveal">
+        <span class="stat-num" data-target="47">0</span>
+        <div class="stat-label">Schulen betreut</div>
+        <div class="stat-desc">Von der Grundschule bis zum Gymnasium – alle im Saarpfalz-Kreis.</div>
+      </div>
+      <div class="stat-card reveal">
+        <span class="stat-num" data-target="8000">0</span>
+        <div class="stat-label">Tablets verwaltet</div>
+        <div class="stat-desc">Damit kein Schüler ohne Endgerät dasitzt. Früher hieß das: keine Filmrolle.</div>
+      </div>
+      <div class="stat-card reveal">
+        <span class="stat-num" data-target="inf">0</span>
+        <div class="stat-label">Ideen für morgen</div>
+        <div class="stat-desc">VR, KI, AR — wir sehen Technik als Einladung, nicht als Bedrohung.</div>
+      </div>
+    </div>
+
+    <!-- Intro -->
+    <div class="intro-block">
+      <h2 class="reveal">Wir sind das MZplus.<br>Und das schon seit einer Weile.</h2>
+      <p class="reveal">
+        Es war 1926. Die Weimarer Republik existierte noch, Stummfilme waren der heißeste Scheiß,
+        und irgendwo im Saarpfalz-Kreis hatte jemand die brillante Idee:
+        <strong>„Lass uns Bilder in Schulen bringen!"</strong>
+      </p>
+      <p class="reveal">
+        Die <strong>Kreisbildstelle</strong> war geboren. Und mit ihr eine Tradition, die 100 Jahre überdauert hat —
+        Kriege, Währungsreformen, den Walkman, Netscape Navigator, Streaming
+        und ja, sogar <strong>Windows Vista</strong>.
+      </p>
+
+      <div class="fun-fact reveal">
+        <div class="fun-fact-label">🎬 Fun Fact #1</div>
+        <p>Unser erster „Server" war ein Holzregal voller Glasdias. Ladezeit: sofort. Absturzrate: null. MTTR: ein Taschentuch. Einfach mal drüber nachdenken.</p>
+      </div>
+
+      <p class="reveal">
+        Heute sind wir das <strong>MZplus</strong> — das „Plus" steht für alles, was früher undenkbar war:
+        Cloud-Infrastruktur, Tabletflotten, KI-Workshops, 3D-Drucker und einen MakerSpace,
+        in dem Schülerinnen und Schüler echte Roboter programmieren.
+        Die Filmrollen liegen im Museum. <strong>Die Mission lebt.</strong>
+      </p>
+
+      <div class="fun-fact reveal">
+        <div class="fun-fact-label">😅 Fun Fact #2</div>
+        <p>Zwischen 1926 und heute haben wir folgende Medienformate unterstützt: Glasdia, Lichttonfilm, 16mm, 8mm, Overhead-Folie, VHS, Betamax (kurz), Laserdisc (noch kürzer), CD-ROM, DVD, Blu-ray, Streaming und jetzt Cloud. Wir sind praktisch die Experten des digitalen Sterbens.</p>
+      </div>
+
+      <div class="btn-group reveal">
+        <button class="btn-primary" onclick="showTab('geschichte')">Die ganze Geschichte lesen</button>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-brand">MZplus · Medienzentrum Plus · Saarpfalz-Kreis</div>
+      <div class="footer-copy">
+        Gegründet 1926 · Modernisiert gefühlt täglich<br>
+        © 2026 Saarpfalz-Kreis
+      </div>
+    </footer>
+  </div>
+
+  <!-- ===== TAB: GESCHICHTE ===== -->
+  <div id="tab-geschichte" class="tab-content">
+
+    <div class="section-header">
+      <div class="kicker">Zeitreise</div>
+      <h2 class="section-title">Von der<br>Filmrolle<br>zur Cloud.</h2>
+      <p class="section-sub">
+        100 Jahre in acht Akten. Technik, Bildung, zwei Weltkriege, ein VHS-Boom,
+        640 KB RAM und die Frage: Was kommt nach der KI?
+      </p>
+    </div>
+
+    <div class="timeline">
+
+      <div class="tl-era reveal">
+        <div class="tl-date"><span class="tl-year">1926</span></div>
+        <div class="tl-dot highlight"></div>
+        <div class="tl-body">
+          <div class="era-tag">Akt I · Gründung</div>
+          <h3 class="era-title">Die Kreisbildstelle erwacht</h3>
+          <img src="unnamed (2).jpg" alt="Kreisbildstelle 1926" class="era-img" style="filter: grayscale(100%) sepia(30%) contrast(1.1);">
+          <p class="era-body">
+            Ein Mann, ein Projektor, ein Stapel Glasdias. So begann alles. Die
+            <strong>Kreisbildstelle des Saarpfalz-Kreises</strong> öffnet ihre Türen —
+            in einer Zeit, in der Kino noch Luxus war und ein Lichtbild im Unterricht
+            dasselbe bedeutete wie heute ein interaktives 8K-Whiteboard.
+          </p>
+          <p class="era-quote">
+            „Stell dir vor: Du zeigst als Lehrer eine Karte von Afrika. Das galt als
+            <strong>Hochtoechnologie™</strong>. Kein WLAN nötig. Kein Passwort. Einfach: Licht."
+          </p>
+          <p class="era-body">
+            Der Auftrag: simpel und genial. Visuelle Medien für alle Schulen zugänglich machen.
+            Jeder Pfennig zählte. Keine Firewall. Kein IT-Ticket. Hingehen, ausleihen, projizieren.
+          </p>
+        </div>
+      </div>
+
+      <div class="tl-era reveal">
+        <div class="tl-date"><span class="tl-year">1930er</span><span class="tl-year-end">— 1945</span></div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <div class="era-tag">Akt II · Der Ton kommt</div>
+          <h3 class="era-title">Der Lieferwagen der Kreisbildstelle</h3>
+          <img src="unnamed (1).jpg" alt="Kreisbildstelle Lieferwagen" class="era-img" style="filter: grayscale(100%) sepia(50%) contrast(1.05);">
+          <p class="era-body">
+            Mit dem Tonfilm ändert sich alles. Die Bibliothek wächst, der Lieferwagen der Kreisbildstelle
+            fährt durch den Saarpfalz-Kreis — ein frühes <strong>Netflix auf vier Rädern</strong>,
+            nur ohne Autoplay, ohne Werbung und mit 100% mehr Schlaglöchern.
+          </p>
+          <p class="era-quote">
+            Der Fahrer war der beliebteste Mensch in jeder Schule.
+            <strong>Er brachte die Filmrollen.</strong> Heute würden wir sagen: Er hatte Glasfaser.
+          </p>
+        </div>
+      </div>
+
+      <div class="tl-era reveal">
+        <div class="tl-date"><span class="tl-year">1950er</span><span class="tl-year-end">— 1960er</span></div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <div class="era-tag">Akt III · Wiederaufbau</div>
+          <h3 class="era-title">16mm und der Duft von Bildung</h3>
+          <img src="unnamed.jpg" alt="1950er Medienverleih" class="era-img">
+          <p class="era-body">
+            Nach dem Krieg: Wirtschaftswunder und das ratternde Geräusch des <strong>16mm-Projektors</strong>.
+            Generationen erinnern sich an dunkle Klassenräume, den überhitzten Motor und den magischen Moment,
+            wenn der Film anspringt. Die Medienstelle wächst rasant.
+          </p>
+          <p class="era-quote">
+            „Ich erinnere mich an den Biologiefilm über Ameisen. 30 Minuten.
+            <strong>Alle schliefen nach fünf.</strong> Aber der Projektor? Spektakulär."
+          </p>
+        </div>
+      </div>
+
+      <div class="tl-era reveal">
+        <div class="tl-date"><span class="tl-year">1970er</span></div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <div class="era-tag">Akt IV · Overhead-Ära</div>
+          <h3 class="era-title">Der Overhead-Projektor dominiert</h3>
+          <img src="unnamed (4).jpg" alt="Overheadprojektor und Filmarbeit" class="era-img">
+          <p class="era-body">
+            Der <strong>Overhead-Projektor</strong> betritt die Bühne — und mit ihm transparente Folien,
+            bunte Stifte und die Kunst, rückwärts zu schreiben. Wer einen OHP bedienen konnte,
+            war automatisch Respektsperson. Auch Dia-Serien und erste AV-Medien finden ihren Weg in die Schulen.
+          </p>
+          <p class="era-quote">
+            Die goldene Ära des: <strong>„Verdunkeln Sie bitte den Raum, ich bin gleich fertig."</strong>
+          </p>
+        </div>
+      </div>
+
+      <div class="tl-era reveal">
+        <div class="tl-date"><span class="tl-year">1985</span><span class="tl-year-end">— 1999</span></div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <div class="era-tag">Akt V · VHS-Zeitalter</div>
+          <h3 class="era-title">VHS, Betamax und die Geburt des Technikstresses</h3>
+          <img src="unnamed (5).jpg" alt="VHS-Ära und frühe Computer" class="era-img">
+          <p class="era-body">
+            VHS vs. Betamax. Wir setzen aufs richtige Pferd. Tausende Kassetten füllen die Regale.
+            Daneben erscheinen die ersten <strong>Heimcomputer</strong>. C64. Atari.
+            Irgendwo blinkt ein grüner Cursor auf schwarzem Bildschirm.
+            Die Bestandsdatenbank der Kreisbildstelle läuft auf einem PC.
+          </p>
+          <p class="era-quote">
+            640 KB RAM. Die Experten sagten: <strong>„Das müsste für immer reichen."</strong>
+            Spoiler: Es reichte nicht.
+          </p>
+        </div>
+      </div>
+
+      <div class="tl-era reveal">
+        <div class="tl-date"><span class="tl-year">2000er</span></div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <div class="era-tag">Akt VI · Digitale Revolution</div>
+          <h3 class="era-title">Das Schild kommt runter</h3>
+          <img src="unnamed (6).jpg" alt="Umbenennung Medienzentrum" class="era-img">
+          <p class="era-body">
+            „Kreisbildstelle" — vier Jahrzehnte an der Wand — weicht dem neuen Namen:
+            <strong>Medienzentrum Saarpfalz-Kreis</strong>. Ein Schraubenzieher, ein symbolischer Akt,
+            eine Menge Nostalgie. Beamer ersetzen Projektoren. DVDs ersetzen VHS.
+            Das Internet erscheint wie ein Wunder und eine Bedrohung gleichzeitig.
+          </p>
+          <p class="era-quote">
+            Erster Schulserver: online. Erste Cyberattacke: 3 Minuten später.
+            <strong>Der Fortschritt kam schnell.</strong>
+          </p>
+        </div>
+      </div>
+
+      <div class="tl-era reveal">
+        <div class="tl-date"><span class="tl-year">2010er</span></div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <div class="era-tag">Akt VII · Tablet-Ära</div>
+          <h3 class="era-title">8.000 Tablets. Eine Herkulesaufgabe.</h3>
+          <img src="unnamed (3).jpg" alt="Modernisierung Medienzentrum" class="era-img">
+          <p class="era-body">
+            Das <strong>MZplus</strong> entsteht. Nicht als Marketingbegriff — als Programm.
+            Schulkoffer voller Tablets. Mobile Device Management. WLAN in jedem Klassenraum.
+            Interaktive Panels ersetzen Tafeln. Cybersicherheit wird Lehrfach.
+          </p>
+          <p class="era-quote">
+            Von der Filmrolle zur Tabletflotte: Das ist keine Evolution.
+            <strong>Das ist Quantensprung.</strong>
+          </p>
+        </div>
+      </div>
+
+      <div class="tl-era reveal">
+        <div class="tl-date"><span class="tl-year">Heute</span><span class="tl-year-end">2026</span></div>
+        <div class="tl-dot highlight"></div>
+        <div class="tl-body">
+          <div class="era-tag">Akt VIII · MZplus</div>
+          <h3 class="era-title">Kompetenzzentrum der Zukunft</h3>
+          <img src="unnamed (7).jpg" alt="MakerSpace heute" class="era-img">
+          <p class="era-body">
+            <strong>3D-Drucker rattern. Roboter summen. KI schreibt Gedichte.</strong><br>
+            Das MZplus 2026 ist mehr als ein Medienzentrum — es ist ein Labor, eine Werkstatt,
+            ein Denkraum. Hier entstehen die Kompetenzen von morgen.
+          </p>
+          <p class="era-body">
+            Medienverleih 4.0, Cloud-Infrastruktur, MakerSpace, Fortbildungen — alles unter einem Dach.
+            Mit demselben Auftrag wie 1926: <strong>Bildung zugänglich machen. Für alle. Jetzt.</strong>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== TAB: LEISTUNGEN ===== -->
+  <div id="tab-leistungen" class="tab-content">
+
+    <div class="section-header">
+      <div class="kicker">Was wir tun</div>
+      <h2 class="section-title">Unsere<br>Superkräfte.</h2>
+      <p class="section-sub">
+        Früher: Filmrollen ausliefern. Heute: digitale Zukunft gestalten.
+        Das Kerngeschäft hat sich verändert. Der Anspruch nicht.
+      </p>
+    </div>
+
+    <div class="services-grid">
+
+      <div class="svc-card reveal">
+        <span class="svc-icon">🎬</span>
+        <div class="svc-num">01 · Medienverleih</div>
+        <h3 class="svc-title">Medienverleih 4.0</h3>
+        <p class="svc-desc">
+          Früher Filmrollen in Metallkoffern. Heute: Tausende Lehrfilme und interaktive Medien
+          auf Knopfdruck — über <strong>SESAM/Edupool</strong>, rechtssicher, lehrplankonform,
+          jederzeit abrufbar. Keine Kratzer. Kein Filmriss. Keine Latespäne.
+        </p>
+        <div class="svc-tag">→ Unbegrenzter Zugang · rechtssicher · lehrplankonform</div>
+      </div>
+
+      <div class="svc-card reveal">
+        <span class="svc-icon">💻</span>
+        <div class="svc-num">02 · Technik-Support</div>
+        <h3 class="svc-title">Technik-Support für alle Schulen</h3>
+        <p class="svc-desc">
+          Interaktive Panels, WLAN, Endgeräte — wir sorgen dafür, dass die Infrastruktur läuft.
+          Von der Installation bis zur Wartung, von der Grundschule bis zum Gymnasium.
+          Der einzige Unterschied zu früher: Heute <em>sprechen</em> die Geräte zurück.
+        </p>
+        <div class="svc-tag">→ 47 Schulen · 8.000+ Geräte · 365 Tage</div>
+      </div>
+
+      <div class="svc-card reveal">
+        <span class="svc-icon">🧑‍🏫</span>
+        <div class="svc-num">03 · Fortbildung</div>
+        <h3 class="svc-title">Fortbildung für mutige Lehrkräfte</h3>
+        <p class="svc-desc">
+          Workshops zu Robotik, Coding, Filmproduktion, kritischem Umgang mit Social Media und KI.
+          Für alle, die verstehen wollen, was ihre Schüler schon längst wissen.
+          <strong>Keine Vorkenntnisse nötig. Nur Neugier.</strong>
+        </p>
+        <div class="svc-tag">→ Robotik · KI · Medienbildung · Filmproduktion</div>
+      </div>
+
+      <div class="svc-card reveal">
+        <span class="svc-icon">☁️</span>
+        <div class="svc-num">04 · Cloud & Security</div>
+        <h3 class="svc-title">Server, Cloud &amp; Cybersecurity</h3>
+        <p class="svc-desc">
+          Wir hosten Serverstrukturen, verwalten Netzwerke und schulen in Cybersicherheit.
+          Das klingt trocken. Ist es aber nicht — nicht wenn man bedenkt,
+          dass unsere erste Datenbank auf einer Karteikarte lief.
+          <strong>DSGVO-konform. Lokal. Sicher.</strong>
+        </p>
+        <div class="svc-tag">→ MDM · Cloud · DSGVO · Netzwerk</div>
+      </div>
+
+      <div class="svc-card reveal">
+        <span class="svc-icon">🤖</span>
+        <div class="svc-num">05 · MakerSpace</div>
+        <h3 class="svc-title">MakerSpace: Wo Ideen Körper bekommen</h3>
+        <p class="svc-desc">
+          3D-Drucker, Virtual Reality, Lasercut, Robotik, Programmierung — ein Ort,
+          an dem man einfach <strong>anfangen darf</strong>. Scheitern ausdrücklich erlaubt.
+          Entdecken ausdrücklich erwünscht. Hausaufgaben vergessen erwünscht.
+        </p>
+        <div class="svc-tag">→ 3D-Druck · VR · Robotik · Coding</div>
+      </div>
+
+      <div class="svc-card featured reveal">
+        <span class="svc-icon">✨</span>
+        <div class="svc-num">Und mehr...</div>
+        <h3 class="svc-title">Was kommt als Nächstes?</h3>
+        <p class="svc-desc">
+          In 100 Jahren haben wir nie aufgehört zu fragen: Was braucht Bildung morgen?
+          KI-Lernbegleiter? Augmented Reality im Geschichtsunterricht? Holografische Experimente?
+          <br><br>
+          <strong>Wir sind gespannt wie Sie.</strong>
+        </p>
+        <div class="svc-tag">→ Immer offen für das Nächste</div>
+      </div>
+
+    </div>
+
+    <div class="fun-fact" style="max-width:1200px; margin: -60px auto 80px; margin-left: auto; margin-right: auto;">
+      <div class="fun-fact-label">📊 Fun Stat</div>
+      <p>Wenn man alle VHS-Kassetten, die wir je im Verleih hatten, aufeinanderstapeln würde, wäre der Turm höher als der Eiffelturm. Das macht das MZplus zu einem der größten unerkannten Wahrzeichen des Saarpfalz-Kreises. Bitte entsprechend würdigen.</p>
+    </div>
+
+  </div>
+
+  <!-- ===== TAB: MAKERSPACE ===== -->
+  <div id="tab-makerspace" class="tab-content">
+
+    <div class="section-header">
+      <div class="kicker">MakerSpace</div>
+      <h2 class="section-title">Mach.<br>Brich.<br>Lern.</h2>
+      <p class="section-sub">
+        Der MakerSpace ist das Anti-Klassenzimmer. Hier gibt es keine Hausaufgaben.
+        Nur Fragen — und Werkzeuge, um sie zu beantworten.
+      </p>
+    </div>
+
+    <div class="maker-hero">
+
+      <div class="maker-big">
+        <div class="maker-cell">
+          <img src="unnamed (7).jpg" alt="3D-Drucker und Bee-Bot" class="maker-img" style="height:320px">
+          <h3 class="maker-cell-title">Das Labor für Entdecker</h3>
+          <p class="maker-cell-sub">
+            Ein Bee-Bot flitzt über ein Schachbrettmuster. Dahinter surrt ein 3D-Drucker
+            und baut Schicht für Schicht etwas, das vorher nur eine Idee war.
+            <strong>Das ist der MakerSpace des MZplus.</strong>
+          </p>
+          <p class="maker-cell-sub" style="margin-top: 14px">
+            Kinder und Jugendliche lernen hier, dass Technologie nicht einfach passiert —
+            sondern gemacht wird. Von Menschen. Von ihnen.
+          </p>
+          <div class="tool-tags">
+            <span class="tool-tag">3D-Druck</span>
+            <span class="tool-tag">Robotik</span>
+            <span class="tool-tag">Virtual Reality</span>
+            <span class="tool-tag">Coding</span>
+            <span class="tool-tag">Elektronik</span>
+            <span class="tool-tag">Filmproduktion</span>
+            <span class="tool-tag">Lasercut</span>
+          </div>
+        </div>
+        <div class="maker-cell dark" style="display:flex; flex-direction:column; justify-content:center;">
+          <h3 class="maker-cell-title" style="font-size: clamp(28px,4vw,52px); color: var(--amber);">
+            „Scheitern ist kein Bug.<br>Es ist ein Feature."
+          </h3>
+          <p class="maker-cell-sub" style="margin-top:20px; color: var(--text2)">
+            Im MakerSpace gilt: Wer nichts kaputt macht, lernt nichts.
+            Wer nichts ausprobiert, erfindet nichts.
+            Die Lehrpläne von morgen schreiben die Schüler von heute.
+          </p>
+          <div class="fun-fact" style="margin-top:28px">
+            <div class="fun-fact-label">🏆 MakerSpace-Rekord</div>
+            <p>Rekordzeit von Idee bis 3D-gedrucktem Ergebnis: 47 Minuten. Rekordhalter: Schülerin aus der 6. Klasse. Gedruckt: ein Miniatur-Projektorgehäuse. In Erinnerung an 1926.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="maker-cells-row">
+        <div class="maker-cell reveal">
+          <div style="font-size:44px; margin-bottom:16px">🖨️</div>
+          <h3 class="maker-cell-title" style="font-size:clamp(22px,2.5vw,28px)">3D-Druck</h3>
+          <p class="maker-cell-sub">
+            Was früher Gips und Pappe war, ist heute Filament.
+            Schüler designen, Schüler drucken, Schüler halten das Ergebnis in den Händen.
+            Das Staunen? Jedes Mal gleich groß. Die Ideen? Jedes Mal verrückter.
+          </p>
+        </div>
+        <div class="maker-cell reveal">
+          <div style="font-size:44px; margin-bottom:16px">🤖</div>
+          <h3 class="maker-cell-title" style="font-size:clamp(22px,2.5vw,28px)">Robotik &amp; Coding</h3>
+          <p class="maker-cell-sub">
+            Von Scratch bis Python. Von Bee-Bot bis autonomem Fahrzeug.
+            Wer einen Roboter programmiert, lernt nicht Informatik —
+            er lernt, logisch zu denken, Fehler zu finden und <strong>nicht aufzugeben</strong>.
+          </p>
+        </div>
+        <div class="maker-cell reveal">
+          <div style="font-size:44px; margin-bottom:16px">🥽</div>
+          <h3 class="maker-cell-title" style="font-size:clamp(22px,2.5vw,28px)">Virtual Reality</h3>
+          <p class="maker-cell-sub">
+            Geschichte erleben statt lesen. Biologie sehen statt beschreiben.
+            Physik anfassen statt berechnen.
+            VR macht den Unterschied zwischen <em>wissen</em> und <em>verstehen</em>.
+          </p>
+        </div>
+      </div>
+
+      <div class="maker-cell" style="margin-top:1px; background: linear-gradient(135deg, var(--bg3), #10101a)">
+        <h3 class="maker-cell-title reveal">🎥 Filmproduktion: Vom Zuschauer zum Macher</h3>
+        <p class="maker-cell-sub reveal" style="max-width:680px">
+          Wir begannen 1926 mit dem <em>Abspielen</em> von Filmen.
+          Heute produzieren wir sie — oder besser: unsere Schülerinnen und Schüler tun es.
+          Script, Kamera, Schnitt, Ton, Farbe, Sound Design. Das Medienzentrum lehrt nicht mehr nur,
+          Medien zu konsumieren. <strong style="color: var(--amber)">Es lehrt, sie zu gestalten.</strong>
+        </p>
+        <p class="maker-cell-sub reveal" style="margin-top:14px; color: var(--text3); font-style: italic">
+          Von der Glasdia-Lichtshow 1926 zur 4K-YouTube-Produktion 2026.
+          Die Kamera ist kleiner geworden. Der Ehrgeiz nicht.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== TAB: VISION ===== -->
+  <div id="tab-vision" class="tab-content">
+
+    <div class="section-header">
+      <div class="kicker">Die nächsten 100 Jahre</div>
+      <h2 class="section-title">Was kommt<br>nach<br>der&nbsp;KI?</h2>
+      <p class="section-sub">
+        Wir wissen es nicht. Aber wir werden dabei sein.
+        Das ist seit 1926 unser einziges, unveränderliches Versprechen.
+      </p>
+    </div>
+
+    <div class="vision-body">
+
+      <div class="vision-manifesto">
+        <p class="reveal">Die Technik ändert sich. <strong>Der Auftrag bleibt.</strong></p>
+        <p class="reveal">In 100 Jahren haben wir Glasdias, Filmrollen, VHS, DVD, Streaming und Cloud überlebt. <em>Wir haben uns jedes Mal verwandelt.</em></p>
+        <p class="reveal">Nicht weil wir mussten. Sondern weil wir <strong>verstanden haben</strong>, worum es wirklich geht: nicht das Medium, sondern die Botschaft.</p>
+        <p class="reveal">Und die Botschaft lautet: <em>Bildung gehört allen.</em></p>
+      </div>
+
+      <div class="future-cards">
+
+        <div class="future-card reveal">
+          <div class="fc-year">Vision · 2030</div>
+          <h3 class="fc-title">KI-Lernbegleiter</h3>
+          <p class="fc-desc">
+            Personalisierte KI-Assistenten für jeden Schüler. Nicht um Hausaufgaben zu schreiben —
+            sondern um zu fragen, zu erklären, zu motivieren. Wie ein Nachhilfelehrer,
+            der nie schläft, nie ungeduldig wird und nie Kaffee braucht.
+          </p>
+        </div>
+
+        <div class="future-card reveal">
+          <div class="fc-year">Vision · 2035</div>
+          <h3 class="fc-title">AR im Unterricht</h3>
+          <p class="fc-desc">
+            Augmented Reality macht Geschichtsstunden zur Zeitreise.
+            Julius Cäsar erscheint im Klassenraum (holografisch, beruhigt euch).
+            DNA dreht sich in 3D vor dem Chemietisch. Physik wird sichtbar.
+          </p>
+        </div>
+
+        <div class="future-card reveal">
+          <div class="fc-year">Vision · 2040</div>
+          <h3 class="fc-title">Digitale Souveränität</h3>
+          <p class="fc-desc">
+            Jede Schülerin, jeder Schüler versteht, wie Algorithmen funktionieren,
+            wie Daten gespeichert werden und warum das ihre Entscheidungen beeinflusst.
+            Medienkompetenz 5.0. Das ist der Job des MZplus.
+          </p>
+        </div>
+
+        <div class="future-card reveal" style="border-color: var(--amber-b);">
+          <div class="fc-year" style="color: var(--amber);">Vision · 2126</div>
+          <h3 class="fc-title">Was auch immer kommt</h3>
+          <p class="fc-desc">
+            In 100 Jahren werden sie auf uns zurückblicken und lächeln,
+            so wie wir heute auf die Kreisbildstelle lächeln.
+            Und sie werden dasselbe sagen: <em>„Die hatten den richtigen Instinkt."</em>
+          </p>
+        </div>
+
+      </div>
+
+      <div class="vision-bigquote">
+        <p class="reveal">
+          „Wir befähigen Menschen im Saarpfalz-Kreis, Medien nicht nur zu
+          <strong>konsumieren</strong>, sondern sie souverän und kreativ zu
+          <em>gestalten</em>."
+        </p>
+        <cite>— Mission MZplus · 1926 bis ∞</cite>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== TAB: KONTAKT ===== -->
+  <div id="tab-kontakt" class="tab-content">
+
+    <div class="section-header">
+      <div class="kicker">Kontakt</div>
+      <h2 class="section-title">Kommen<br>Sie vorbei.</h2>
+      <p class="section-sub">
+        Wir haben keinen Filmvorführer mehr an der Tür.
+        Aber wir freuen uns trotzdem über Besuch.
+      </p>
+    </div>
+
+    <div class="contact-wrap">
+      <div class="contact-grid">
+
+        <div class="contact-group">
+          <h3>MZplus · Medienzentrum Plus</h3>
+
+          <div class="contact-item reveal">
+            <div class="contact-icon">📍</div>
+            <div class="contact-text">
+              <strong>Standort</strong>
+              Medienzentrum Plus<br>
+              Saarpfalz-Kreis, Saarland<br>
+              Homburg / Blieskastel
+            </div>
+          </div>
+
+          <div class="contact-item reveal">
+            <div class="contact-icon">🕐</div>
+            <div class="contact-text">
+              <strong>Öffnungszeiten</strong>
+              Montag – Freitag<br>
+              08:00 – 16:00 Uhr<br>
+              <em style="font-size:13px; color: var(--text3)">(Früher gab es Filmverleih auch nach Feierabend. Das waren andere Zeiten.)</em>
+            </div>
+          </div>
+
+          <div class="contact-item reveal">
+            <div class="contact-icon">🏛️</div>
+            <div class="contact-text">
+              <strong>Träger</strong>
+              Saarpfalz-Kreis<br>
+              Amt für Bildung und Medien
+            </div>
+          </div>
+
+          <div class="contact-item reveal">
+            <div class="contact-icon">🎓</div>
+            <div class="contact-text">
+              <strong>Für Schulen &amp; Lehrkräfte</strong>
+              Alle Schulen im Saarpfalz-Kreis können unsere Angebote nutzen.
+              Anfragen zum Medienverleih, Fortbildungen oder MakerSpace
+              bitte über das Schulsekretariat oder die Schulverwaltung.
+            </div>
+          </div>
+
+          <div class="fun-fact reveal" style="margin-top: 24px">
+            <div class="fun-fact-label">☕ Über uns</div>
+            <p>Unser Team hat zusammen mehr Geräteausfälle überlebt als ein durchschnittliches Rechenzentrum. Wir sind kampferprobte Bildungsnerds. Und wir trinken definitiv zu viel Kaffee.</p>
+          </div>
+        </div>
+
+        <div>
+          <div class="terminal reveal">
+            <div class="term-header">
+              <div class="term-dot r"></div>
+              <div class="term-dot y"></div>
+              <div class="term-dot g"></div>
+            </div>
+            <span class="term-line"><span class="p">mzplus</span> <span class="path">~/medienzentrum</span> <span class="cmd">$ git log --oneline</span></span>
+            <span class="term-line out">1926  feat: launch Kreisbildstelle ✨</span>
+            <span class="term-line out">1931  feat: add Tonfilm support</span>
+            <span class="term-line out">1952  feat: 16mm projector fleet v2</span>
+            <span class="term-line out">1972  feat: install OHP everywhere</span>
+            <span class="term-line out">1989  chore: migrate VHS, rip Betamax</span>
+            <span class="term-line out">2001  feat: go online, rename to Medienzentrum</span>
+            <span class="term-line out">2012  feat: tablet fleet (8000 units) 📱</span>
+            <span class="term-line out">2018  feat: MakerSpace v1 🤖</span>
+            <span class="term-line out">2024  feat: AI integration, cloud-native 🚀</span>
+            <span class="term-line out">2026  chore: celebrate 100 years 🎉</span>
+            <br>
+            <span class="term-line"><span class="p">mzplus</span> <span class="path">~/medienzentrum</span> <span class="cmd">$ wc -l IMPACT.md</span></span>
+            <span class="term-line out" style="color: var(--green); font-weight:500">∞ <span style="color: rgba(255,255,255,.3)">Schüler befähigt</span></span>
+            <span class="term-line"><span class="p">mzplus</span> <span class="path">~/medienzentrum</span> <span class="cmd">$ _</span><span class="term-cursor" style="color: var(--green)">█</span></span>
+          </div>
+
+          <div style="margin-top: 20px; padding: 28px; background: var(--bg2); border: 1px solid var(--border)">
+            <p style="font-family: var(--mono); font-size: 9px; color: var(--text2); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 14px">Aktuelle Meldungen</p>
+            <p style="font-size:15px; color: var(--text2); line-height: 1.8">
+              🎉 <strong style="color:var(--text)">100-Jahr-Jubiläum 2026</strong> — Feiern Sie mit uns das Medienzentrum, das aus einer Kreisbildstelle ein digitales Kompetenzzentrum machte. Veranstaltungen, Ausstellungen und natürlich: einen historischen Filmabend.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-brand">MZplus · Medienzentrum Plus · Saarpfalz-Kreis</div>
+      <div class="footer-copy">
+        Gegründet 1926 · 100 Jahre Innovation<br>
+        © 2026 Saarpfalz-Kreis · Impressum · Datenschutz
+      </div>
+    </footer>
+
+  </div>
+
+</main>
+
+<script>
+  // ========================
+  // FILM COUNTDOWN
+  // ========================
+  const countdown = document.getElementById('countdown');
+  const cdNum     = document.getElementById('cd-num');
+  const cdRing    = document.getElementById('cd-ring');
+  let count = 5;
+
+  const tick = () => {
+    count--;
+    if (count > 0) {
+      cdNum.textContent = count;
+      // restart ring animation
+      cdRing.style.animation = 'none';
+      void cdRing.offsetWidth;
+      cdRing.style.animation = 'ring-spin .8s linear';
+    } else {
+      cdNum.textContent = '▶';
+      cdNum.style.color = '#f0a330';
+      cdNum.style.fontSize = 'clamp(60px,15vw,100px)';
+      setTimeout(launch, 800);
+    }
+  };
+
+  const cdInterval = setInterval(tick, 800);
+
+  function launch() {
+    clearInterval(cdInterval);
+    countdown.style.transition = 'opacity .7s ease';
+    countdown.style.opacity = '0';
+    setTimeout(() => {
+      countdown.style.display = 'none';
+      document.getElementById('main-nav').style.display = 'block';
+      document.getElementById('main-content').style.display = 'block';
+      buildFilmHoles();
+      buildFilmStrip();
+      initReveal();
+      animateNumbers();
+    }, 700);
+  }
+
+  // ========================
+  // FILM HOLES
+  // ========================
+  function buildFilmHoles() {
+    const nav = document.getElementById('film-holes-nav');
+    for (let i = 0; i < 80; i++) {
+      const h = document.createElement('div');
+      h.className = 'film-hole';
+      nav.appendChild(h);
+    }
+  }
+
+  // ========================
+  // FILM STRIP
+  // ========================
+  function buildFilmStrip() {
+    const track = document.getElementById('film-track');
+    const perfsTop = document.getElementById('film-perfs-top');
+    const perfsBot = document.getElementById('film-perfs-bot');
+
+    // Build perfs
+    [perfsTop, perfsBot].forEach(row => {
+      for (let i = 0; i < 100; i++) {
+        const p = document.createElement('div'); p.className = 'film-perf';
+        row.appendChild(p);
+      }
+    });
+
+    const items = [
+      { src: 'unnamed.jpg',      label: '1950s' },
+      { src: 'unnamed (1).jpg',  label: '1930s' },
+      { src: 'unnamed (2).jpg',  label: '1926' },
+      { src: 'unnamed (3).jpg',  label: '1950s–60s' },
+      { src: 'unnamed (4).jpg',  label: '1960s–70s' },
+      { src: 'unnamed (5).jpg',  label: '1985–99' },
+      { src: 'unnamed (6).jpg',  label: '2000s' },
+      { src: 'unnamed (7).jpg',  label: 'Heute' },
+    ];
+
+    // Duplicate for seamless loop
+    [...items, ...items].forEach(item => {
+      const frame = document.createElement('div');
+      frame.className = 'film-frame';
+      frame.innerHTML = `
+        <img src="${item.src}" alt="MZplus ${item.label}" loading="lazy">
+        <div class="film-frame-label">${item.label}</div>
+      `;
+      track.appendChild(frame);
+    });
+  }
+
+  // ========================
+  // TAB NAVIGATION
+  // ========================
+  function showTab(id) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+
+    const tab = document.getElementById('tab-' + id);
+    if (tab) {
+      tab.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setTimeout(initReveal, 150);
+    }
+
+    document.querySelectorAll('.nav-tab').forEach(btn => {
+      if (btn.getAttribute('onclick').includes("'" + id + "'")) {
+        btn.classList.add('active');
+      }
+    });
+  }
+
+  // ========================
+  // SCROLL REVEAL
+  // ========================
+  function initReveal() {
+    const els = document.querySelectorAll('.reveal:not(.visible)');
+    if (!els.length) return;
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    els.forEach(el => obs.observe(el));
+  }
+
+  // ========================
+  // ANIMATED NUMBERS
+  // ========================
+  function animateNumbers() {
+    document.querySelectorAll('[data-target]').forEach(el => {
+      const t = el.getAttribute('data-target');
+      if (t === 'inf') { el.textContent = '∞'; return; }
+      const target = parseInt(t);
+      const dur = 2200;
+      const step = target / (dur / 16);
+      let cur = 0;
+      const timer = setInterval(() => {
+        cur += step;
+        if (cur >= target) { cur = target; clearInterval(timer); }
+        el.textContent = Math.floor(cur).toLocaleString('de-DE');
+      }, 16);
+    });
+  }
+
+  // ========================
+  // PROGRESS BAR
+  // ========================
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = h > 0 ? (window.scrollY / h) * 100 : 0;
+    document.getElementById('progress-bar').style.width = pct + '%';
+  });
+</script>
+</body>
+</html>

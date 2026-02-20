@@ -1,0 +1,64 @@
+Das **MZplus** (Medienzentrum Plus) des Saarpfalz-Kreises ist eine Institution, die den Wandel von der analogen Welt der Lichtspielhäuser bis hin zur voll digitalisierten Bildungslandschaft von heute verkörpert.
+
+Hier ist ein Entwurf für eine Webseite, die diese 100-jährige Reise (1926–2026) strukturiert und lebendig erzählt.
+
+---
+
+## 1. Startseite: Willkommen im digitalen Herz der Bildung
+
+**Headline:** 100 Jahre Medienkompetenz – Gestern Filmrolle, heute Cloud.
+**Subline:** Das MZplus im Saarpfalz-Kreis: Ihr Partner für Bildung, Technik und Innovation seit 1926.
+
+**Kurztext:**
+Vom "Bildstellenwesen" der Weimarer Republik bis zum KI-gestützten Klassenzimmer von morgen – das MZplus begleitet Schulen, Vereine und Bildungseinrichtungen im Saarpfalz-Kreis durch die Evolution der Medien. Wir sind mehr als ein Verleih; wir sind Gestalter des digitalen Wandels.
+
+---
+
+## 2. Unsere Geschichte: Eine Zeitreise (1926 – Heute)
+
+### Die Anfänge (1926 – 1945): Lichtbilder und Propaganda
+
+Gegründet im Jahr 1926 als Kreisbildstelle, lag der Fokus zunächst auf der Verteilung von Glas-Lichtbildern und frühen Stummfilmen. In einer Zeit ohne Fernsehen war die Bildstelle das Fenster zur Welt – oft unter schwierigen politischen Vorzeichen, aber immer mit dem Ziel, visuelles Lernen in die Schulen zu bringen.
+
+### Der Wiederaufbau (1945 – 1970er): Die Ära des 16mm-Films
+
+Nach dem Krieg wurde die Bildstelle zur unverzichtbaren Ressource. Generationen von Schülern im Saarpfalz-Kreis erinnern sich an das ratternde Geräusch der 16mm-Projektoren. Das Medienzentrum kuratierte Bildungschroniken und Naturfilme, die den Unterricht bereicherten.
+
+### Technischer Umbruch (1980er – 2000er): Von VHS zu DVD
+
+Mit dem Einzug der Videokassette veränderte sich alles. Das MZplus passte sich an: Der physische Verleih wurde massiv ausgebaut, die Medientechnik wurde mobiler. In den 90ern hielten die ersten Computer Einzug, und das Medienzentrum wurde zum Wegbereiter der Informatik an Schulen.
+
+### Die Transformation zum MZplus (2010 – Heute)
+
+Heute ist das "Plus" in unserem Namen Programm. Wir haben den Schritt vom reinen Materialverleih zum Kompetenzzentrum vollzogen. Wir hosten Serverstrukturen, verwalten Tablets für Tausende Schüler und schulen Lehrkräfte in Sachen Cybersicherheit und digitaler Didaktik.
+
+---
+
+## 3. Leistungen: Was wir heute tun
+
+* **Medienverleih 4.0:** Zugriff auf Tausende Online-Medien über das Portal SESAM/Edupool – rechtssicher und lehrplankonform.
+* **Technik-Support:** Ausstattung der Schulen im Saarpfalz-Kreis mit interaktiven Panels, WLAN und Endgeräten.
+* **Fortbildung:** Workshops zu Robotik, Coding, Filmproduktion und dem kritischen Umgang mit Sozialen Medien.
+* **MakerSpace:** Ein Ort zum Ausprobieren – von 3D-Druck bis Virtual Reality.
+
+---
+
+## 4. Vision: Die nächsten 100 Jahre
+
+Die Technik ändert sich, der Auftrag bleibt: Wir befähigen Menschen im Saarpfalz-Kreis, Medien nicht nur zu konsumieren, sondern sie souverän und kreativ zu gestalten. Ob Augmented Reality im Geschichtsunterricht oder KI als Lernbegleiter – wir sind bereit.
+
+---
+
+## 5. Kontakt & Standort
+
+**MZplus Saarpfalz-Kreis**
+*Ort:* (z.B. am Standort Homburg/Zentral)
+*Tradition trifft Zukunft.*
+
+---
+
+### Ein Tipp für die Umsetzung:
+
+Für die Webseite wäre es großartig, ein **interaktives Zeitstrahl-Element** einzubauen, auf dem man die alten Projektoren von 1926 neben den VR-Brillen von heute sieht. Das verdeutlicht den enormen Sprung, den das MZplus gemacht hat.
+
+**Soll ich dir zu einem dieser Abschnitte (z. B. der Gründungszeit oder dem modernen MakerSpace) einen detaillierteren Blog-Post schreiben?**
