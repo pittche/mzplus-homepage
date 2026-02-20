@@ -771,6 +771,166 @@
     }
 
     /* ==============================
+       SWAG VIDEO SECTION
+    ============================== */
+    .swag-section {
+      position: relative;
+      overflow: hidden;
+      padding: 80px 24px;
+      background: #070710;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Animated background glow */
+    .swag-section::before {
+      content: '';
+      position: absolute;
+      top: -40%; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 700px;
+      background: radial-gradient(ellipse, rgba(0,204,238,.12) 0%, rgba(240,163,48,.08) 50%, transparent 70%);
+      pointer-events: none;
+      animation: swag-glow 4s ease-in-out infinite alternate;
+    }
+    @keyframes swag-glow {
+      0%  { opacity: .6; transform: translateX(-50%) scale(1); }
+      100%{ opacity: 1;  transform: translateX(-50%) scale(1.15); }
+    }
+
+    .swag-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .swag-badge-row {
+      display: flex; align-items: center; justify-content: center;
+      gap: 12px; margin-bottom: 20px; flex-wrap: wrap;
+    }
+
+    .swag-trophy {
+      font-size: 36px;
+      animation: trophy-bounce .8s ease-in-out infinite alternate;
+    }
+    @keyframes trophy-bounce {
+      0%  { transform: translateY(0) rotate(-5deg); }
+      100%{ transform: translateY(-6px) rotate(5deg); }
+    }
+
+    .swag-winner-badge {
+      background: linear-gradient(135deg, #f0a330, #ffd27a, #f0a330);
+      background-size: 200%;
+      animation: gold-shimmer 2s linear infinite;
+      color: #000;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 2px;
+    }
+    @keyframes gold-shimmer {
+      0%  { background-position: 0% 50%; }
+      100%{ background-position: 200% 50%; }
+    }
+
+    .swag-title {
+      font-family: var(--serif);
+      font-size: clamp(36px, 7vw, 80px);
+      font-weight: 700; line-height: .95;
+      letter-spacing: -2px; text-align: center;
+      margin-bottom: 8px;
+    }
+    .swag-title .swag-t1 { color: var(--text); display: block; }
+    .swag-title .swag-t2 {
+      color: var(--cyan); font-style: italic; display: block;
+      text-shadow: 0 0 40px rgba(0,204,238,.5);
+    }
+
+    .swag-sub {
+      text-align: center;
+      font-family: var(--mono); font-size: 11px;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--text2); margin-bottom: 40px;
+    }
+
+    /* Video player wrapper */
+    .swag-player-wrap {
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px var(--border),
+        0 0 60px rgba(0,204,238,.15),
+        0 0 120px rgba(240,163,48,.08);
+      background: #000;
+    }
+
+    /* Scanline overlay for cinematic feel */
+    .swag-player-wrap::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,.04) 2px,
+        rgba(0,0,0,.04) 4px
+      );
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .swag-video {
+      width: 100%; display: block;
+      max-height: 70vh;
+      background: #000;
+    }
+
+    /* Corner deco */
+    .swag-corner {
+      position: absolute;
+      width: 20px; height: 20px;
+      border-color: var(--cyan);
+      border-style: solid; z-index: 4;
+    }
+    .swag-corner.tl { top: -1px; left: -1px;  border-width: 2px 0 0 2px; }
+    .swag-corner.tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+    .swag-corner.bl { bottom: -1px; left: -1px;  border-width: 0 0 2px 2px; }
+    .swag-corner.br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+    .swag-caption {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 15px;
+      color: var(--text2);
+      line-height: 1.7;
+    }
+    .swag-caption strong { color: var(--text); }
+    .swag-caption em { color: var(--amber); font-style: normal; }
+
+    /* Pulsing dots decoration */
+    .swag-dots {
+      display: flex; justify-content: center; gap: 6px; margin-top: 20px;
+    }
+    .swag-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--cyan);
+      animation: swag-dot-pulse 1.2s ease-in-out infinite;
+    }
+    .swag-dot:nth-child(2) { animation-delay: .2s; background: var(--amber); }
+    .swag-dot:nth-child(3) { animation-delay: .4s; }
+    .swag-dot:nth-child(4) { animation-delay: .6s; background: var(--amber); }
+    .swag-dot:nth-child(5) { animation-delay: .8s; }
+    @keyframes swag-dot-pulse {
+      0%, 100%{ transform: scale(1); opacity: .4; }
+      50%{ transform: scale(1.6); opacity: 1; }
+    }
+
+    /* ==============================
        RESPONSIVE
     ============================== */
     @media (max-width: 1024px) {
@@ -844,9 +1004,9 @@
 ============================== -->
 <nav id="main-nav" style="display:none">
   <div class="nav-brand-bar">
-    <div onclick="showTab('start')" style="cursor:pointer">
-      <div class="brand-logo">MZ<span>plus</span></div>
-      <div class="brand-sub">Medienzentrum Plus · Saarpfalz-Kreis</div>
+    <div onclick="showTab('start')" style="cursor:pointer; display:flex; align-items:center; gap:12px;">
+      <img src="Logo.jpg" alt="MZplus Logo" style="height:38px; width:auto; object-fit:contain;">
+      <div class="brand-sub" style="display:none" id="brand-sub-text">Medienzentrum Plus · Saarpfalz-Kreis</div>
     </div>
     <div class="brand-badge">1926 — 2026 · 100 JAHRE</div>
   </div>
@@ -956,6 +1116,55 @@
         <button class="btn-primary" onclick="showTab('geschichte')">Die ganze Geschichte lesen</button>
       </div>
     </div>
+
+    <!-- ===== SWAG VIDEO ===== -->
+    <section class="swag-section reveal">
+      <div class="swag-inner">
+
+        <div class="swag-badge-row">
+          <div class="swag-trophy">🏆</div>
+          <div class="swag-winner-badge">Gewinnersong · Jugend-Wettbewerb</div>
+          <div class="swag-trophy">🏆</div>
+        </div>
+
+        <h2 class="swag-title">
+          <span class="swag-t1">Saarpfalz</span>
+          <span class="swag-t2">Swag.</span>
+        </h2>
+        <p class="swag-sub">Gemacht von Jugendlichen · Für das MZplus · Weil sie es drauf haben</p>
+
+        <div class="swag-player-wrap">
+          <div class="swag-corner tl"></div>
+          <div class="swag-corner tr"></div>
+          <div class="swag-corner bl"></div>
+          <div class="swag-corner br"></div>
+          <video
+            class="swag-video"
+            controls
+            preload="metadata"
+            playsinline
+          >
+            <source src="Saarpfalz_Swag.mp4" type="video/mp4">
+            Ihr Browser unterstützt kein HTML5-Video.
+          </video>
+        </div>
+
+        <p class="swag-caption">
+          <strong>Der Gewinnersong des MZplus-Jugendwettbewerbs.</strong><br>
+          Junge Talente aus dem Saarpfalz-Kreis haben gezeigt, dass Medienkompetenz nicht nur aus Tablets besteht —
+          sondern auch aus <em>echtem Swag</em>. 🎤🎵
+        </p>
+
+        <div class="swag-dots">
+          <div class="swag-dot"></div>
+          <div class="swag-dot"></div>
+          <div class="swag-dot"></div>
+          <div class="swag-dot"></div>
+          <div class="swag-dot"></div>
+        </div>
+
+      </div>
+    </section>
 
     <footer class="site-footer">
       <div class="footer-brand">MZplus · Medienzentrum Plus · Saarpfalz-Kreis</div>
